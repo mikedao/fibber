@@ -18,8 +18,22 @@ def jagged(array)
 end
 
 def better(array)
-  formatted = array.map { |number| number.to_s.rjust(4, " ") }
-  formatted.map.with_index do |value, index|
+  array.
+    map { |number| number.to_s.rjust(4, " ") }.
+    map.
+    with_index do |value, index|
+      print value + " "
+      if (index + 1) % 5 == 0
+        puts " "
+      end
+    end
+end
+
+def fancy(array)
+  max = array.last.to_s.length
+  array.map { |num| num.to_s.rjust(max, " ") }.
+    map.
+    with_index do |value, index|
     print value + " "
     if (index + 1) % 5 == 0
       puts " "
@@ -27,4 +41,3 @@ def better(array)
   end
 end
 
-puts better(fib(15))
