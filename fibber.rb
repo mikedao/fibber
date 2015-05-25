@@ -1,43 +1,49 @@
-def fib(quantity)
-  output = [0,1]
-  return output[0] if quantity == 1
-  return output if quantity ==2
-  (quantity-2).times do
-    output << output[-1] + output[-2]
-  end
-  return output
-end
+class Fibber
 
-def jagged(array)
-  array.map.with_index do |value, index|
-    print value.to_s + " "
-    if (index + 1) % 5 == 0
-      puts " "
+  def runner(quantity)
+    sequence = generate(quantity)
+    jagged(sequence)
+    better(sequence)
+    fancy(sequence)
+  end
+
+  private
+
+  def generate(quantity)
+    (2...quantity).reduce([0,1]) do |result, index|
+      result[index] = result[index - 1] + result[index - 2]
+      result
     end
   end
-end
 
-def better(array)
-  array.
-    map { |number| number.to_s.rjust(4, " ") }.
-    map.
-    with_index do |value, index|
-      print value + " "
-      if (index + 1) % 5 == 0
-        puts " "
+  def jagged(sequence)
+    sequence.each_slice(5) do |line|
+      line.map do |item|
+        print "#{item} "
       end
-    end
-end
-
-def fancy(array)
-  max = array.last.to_s.length
-  array.map { |num| num.to_s.rjust(max, " ") }.
-    map.
-    with_index do |value, index|
-    print value + " "
-    if (index + 1) % 5 == 0
-      puts " "
+      puts ""
     end
   end
-end
 
+  def better(sequence)
+    sequence.each_slice(5) do |line|
+      line.map do |item|
+        print item.to_s.rjust(4)
+      end
+      puts ""
+    end
+  end
+
+  def fancy(sequence)
+    sequence.each_slice(5) do |line|
+      line.map do |item|
+        print item.to_s.rjust(max_size(sequence))
+      end
+      puts ""
+    end
+  end
+
+  def max_size(sequence)
+    sequence.last.to_s.length + 1
+  end
+end
